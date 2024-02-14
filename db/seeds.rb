@@ -7,14 +7,30 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-restaurants = [
-  { name: 'The Stirred Pot', address: '123 Column St.', phone_number: '123-3456', category: 'italian' },
-  { name: 'Mandibites', address: '5421 Ring Ln.', phone_number: '443-5327', category: 'japanese' },
-  { name: 'Cheese Explosion', address: '67 Rundam Way', phone_number: '098-5432', category: 'chinese' },
-  { name: 'Edible Underwear Co.', address: '63-25 Kabuki-san-cho-me', phone_number: '436-7354', category: 'french' },
-  { name: 'Hobo Kitchen', address: 'The alley over there', phone_number: '909-838-3522', category: 'belgian' }
-]
-restaurants.each do |restaurant|
-  restaurant = Restaurant.new(restaurant)
+
+20.times do
+  data = {
+    name: Faker::Restaurant.name,
+    address: Faker::Address.street_address,
+    category: %w[japanese chinese italian french belgian].sample,
+    phone_number: Faker::PhoneNumber.phone_number,
+    description: Faker::Restaurant.description,
+    pic_url: Faker::LoremFlickr.image(size: '300x200', search_terms: ['restaurant'])
+  }
+  restaurant = Restaurant.new(data)
   restaurant.save
+end
+
+restaurants = Restaurant.all
+restaurants.each do |restaurant|
+  rand(4..10).times do
+    data = {
+      name: Faker::FunnyName.two_word_name,
+      content: Faker::Restaurant.review,
+      rating: rand(0..5),
+      restaurant_id: restaurant.id
+    }
+    review = Review.new(data)
+    review.save
+  end
 end
