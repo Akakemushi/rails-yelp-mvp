@@ -1,0 +1,12 @@
+<h1>Restaurants</h1>
+<% @restaurants.each do |restaurant| %>
+  <div style="width: 500px; height: auto;" class="ml-3 my-3 px-4 border border-3 border-rounded">
+    <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
+    <h3><%= restaurant.category.capitalize %></h3>
+    <div class="d-flex justify-content-between">
+      <p><em>Address: <%= restaurant.address %></p>
+      <p>Phone: <%= restaurant.phone_number %></em></p>
+    </div>
+  </div>
+<% end %>
+<a href="restaurants/new" class="btn btn-primary">Add Restaurant</a>
